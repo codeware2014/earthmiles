@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,7 +23,7 @@ import android.widget.Toast;
 
 public class UserDetailsActivity extends Activity{
 	private String access_token;
-	private TextView id, first_name,last_name,email,friends;
+	private TextView id, first_name,last_name,email;
 	private Button continueBtn;
 	private JSONParser jParser = new JSONParser();
 	private TableLayout friendsTable;
@@ -38,10 +39,16 @@ public class UserDetailsActivity extends Activity{
 		first_name=(TextView)findViewById(R.id.fb_first_name);
 		last_name=(TextView)findViewById(R.id.fb_last_name);
 		email=(TextView)findViewById(R.id.fb_email);
-		//friends=(TextView)findViewById(R.id.fb_friends);
 		continueBtn=(Button)findViewById(R.id.fb_continue);
 		friendsTable=(TableLayout)findViewById(R.id.tableLayout1);
 		new LoadUserDetails().execute();
+	}
+	
+	public void onClick(View v){
+		Intent i = new Intent(this,RunKeeperActivity.class);
+		i.putExtra("email", email.getText().toString());
+		startActivity(i);
+		finish();
 	}
 	
 	private class LoadUserDetails extends AsyncTask<String,Integer,JSONObject>{
